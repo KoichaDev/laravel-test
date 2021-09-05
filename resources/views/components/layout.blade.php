@@ -14,8 +14,8 @@
     <header>
         @yield('header-banner')
     </header>
-    {{-- This is saying that any content from the view will be yielded --}}
-    @yield('content')
+    {{-- $slot is something you can think of your default slot component --}}
+    {{ $slot }}
 </body>
 
 </html>
