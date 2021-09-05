@@ -11,10 +11,10 @@
 
 <body>
     <article>
-        <h1><?= $post -> title; ?></h1>
+        {{$post -> title; }}
 
         <div>
-            <?= $post-> body; ?>
+            {!! $post -> body; !!}
         </div>
     </article>
 

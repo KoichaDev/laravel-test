@@ -10,14 +10,28 @@
 </head>
 
 <body>
-    <?php foreach ($posts as $post) : ?>
-    <article>
+    @if(true)
+
+    @endif
+
+    @unless
+
+    @endunless
+
+    {{-- This is called a blade directive --}}
+    @foreach ($posts as $post)
+
+    <article class="{{$loop->even ? 'foobar' : ''}}">
         <h1>
-            <a href="posts/<?= $post->slug; ?>"><?= $post -> title; ?></a>
+            <a href="posts/{{$post -> slug; }}"><?= $post -> title; ?></a>
         </h1>
-        <p><?= $post -> excerpt; ?></p>
+
+        <div>
+            {{$post -> excerpt; }}
+        </div>
+
     </article>
-    <?php endforeach; ?>
+    @endforeach;
 
 </body>
 
