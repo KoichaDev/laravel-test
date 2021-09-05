@@ -27,13 +27,8 @@ Route::get('posts/{post}', function ($slug) {
     return view(
         'post',
         [
-            'post' => Post::find($slug)
+            'post' => Post::findOrFail($slug)
+
         ]
     );
-
-    // regex: find one or more A-z characters with upper or lowercase letter
-    // it's okey to allow underscore and a dash as well
-})->where('post', '[A-z_\-]+');
-
-// If you want more control, then you could do the where() with the regular expression
-// ->whereAlpha('post');
+});
