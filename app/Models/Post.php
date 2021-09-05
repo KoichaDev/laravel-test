@@ -22,7 +22,7 @@ class Post {
     }
 
     public static function all() {
-        $files = File::files(resource_path("posts/"));
+
 
         // Alternative 1 approach.
         // return array_map(function ($file) {
@@ -40,19 +40,24 @@ class Post {
         // Alternative 2 approach (cleaner way).
         // Collections are a feature provided by laravel, it's a sort of Array like on stereoids. It gives you more OOP-syntax for calling all sorts of methods
         // if you want to iterate or map over them, filter them, combine them or merge them.
-        return collect($files)
-            ->map(function ($file) { // Mapping through the YAML front matter file
-                return YamlFrontMatter::parseFile($file);
-            })
-            ->map(function ($document) { // after mapping through, we want to fetch it by using the callback function of $document
-                return new Post(
-                    $document->title,
-                    $document->excerpt,
-                    $document->date,
-                    $document->body(),
-                    $document->slug,
-                );
-            });
+
+        return cache()->rememberForever('posts.all', function () {
+            $files = File::files(resource_path("posts/"));
+            return collect($files)
+                ->map(function ($file) { // Mapping through the YAML front matter file
+                    return YamlFrontMatter::parseFile($file);
+                })
+                ->map(function ($document) { // after mapping through, we want to fetch it by using the callback function of $document
+                    return new Post(
+                        $document->title,
+                        $document->excerpt,
+                        $document->date,
+                        $document->body(),
+                        $document->slug,
+                    );
+                })
+                ->sortByDesc('date');
+        });
     }
 
     public static function find($slug) {
