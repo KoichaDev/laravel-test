@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
     return view('posts', [
         'posts' => Post::all(),
     ]);
@@ -34,5 +35,5 @@ Route::get('posts/{post}', function ($slug) {
     // it's okey to allow underscore and a dash as well
 })->where('post', '[A-z_\-]+');
 
-    // If you want more control, then you could do the where() with the regular expression
-    // ->whereAlpha('post');
+// If you want more control, then you could do the where() with the regular expression
+// ->whereAlpha('post');
